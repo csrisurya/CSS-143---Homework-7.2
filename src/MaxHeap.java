@@ -12,7 +12,7 @@ public class MaxHeap implements Heap {
 
     // build a heap based on data
     // to be implemented in O(nlogn)
-    public void MaxHeapLogN(Integer[] data) {
+    public void MaxHeapNLogN(Integer[] data) {
         for(int i =0; i < data.length; i++){
             add(data[i]);
         }
@@ -21,8 +21,11 @@ public class MaxHeap implements Heap {
     // build a heap based on data
     // to be implemented in O(n)
     public void MaxHeapN(Integer[] data) {
-        this.data = data;
-        int index = this.data.length-1;
+        this.size = data.length;
+        for(int i = 0; i < data.length; i++){
+            this.data[i] = data[i];
+        }
+        int index = data.length-1;
         for(int i = index; i > 0; i--){
             heapifyUp(i);
             if(leftChildIndex(i) < data.length && data[leftChildIndex(i)] > data[i]){
@@ -87,23 +90,65 @@ public class MaxHeap implements Heap {
     public Integer pop() { // work on this
         int root = data[0];
         swap(0, size-1);
-        data[size-1] = null;
+        data[size-1] = -1; // null value of -1 is used to avoid Null Pointer exception
+                            // assumes that -1 is never inputted into the heap
         size--;
         heapifyDown(0);
         return root;
     }
+    public Integer[] bubbleSort(Integer[] data) {
+        for(int i = 0; i < data.length-1; i++) {
+            for (int j = 0; j < data.length - 1 - i; j++) {
+                if (data[j] > data[j + 1]) {
+                    int temp = data[j];
+                    data[j] = data[j+1];
+                    data[j+1] = temp;
+                }
+            }
+        }
+        return data;
+    }
+
+    public boolean isValidHeap(){
+        boolean isValidHeap = true;
+        for(int i = 0; i < this.data.length; i++){
+            if(this.rightChildIndex(i) >= this.data.length || this.leftChildIndex(i) >= this.data.length) {
+                break;
+            }
+            if (this.data[i] < this.data[leftChildIndex(i)] || this.data[i] < this.data[rightChildIndex(i)]) {
+                isValidHeap = false;
+            }
+        }
+        return isValidHeap;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MaxHeap heap = (MaxHeap) o;
+
+        return (this.size == heap.size) && this.isValidHeap() && heap.isValidHeap() &&
+                Arrays.equals(bubbleSort(this.data), bubbleSort(heap.data));
+    }
+
 
     public static void main(String[] args) {
         MaxHeap heap = new MaxHeap(5);
         Integer[] array = {2,5,6,8,4};
-        heap.MaxHeapLogN(array);
+        heap.MaxHeapNLogN(array);
         System.out.println(Arrays.toString(heap.data));
-//        heap.pop();
+        System.out.println(heap.pop());
+        System.out.println(Arrays.toString(heap.data));
+        System.out.println(heap.isValidHeap());
 //        System.out.println(Arrays.toString(heap.data));
 
-        MaxHeap heap2 = new MaxHeap(5);
+        MaxHeap heap2 = new MaxHeap(6);
         heap2.MaxHeapN(array);
         System.out.println(Arrays.toString(heap2.data));
+
+//        System.out.println(heap.equals(heap2));
+
 
 
 
