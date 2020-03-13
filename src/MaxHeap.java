@@ -90,7 +90,8 @@ public class MaxHeap implements Heap {
     public Integer pop() { // work on this
         int root = data[0];
         swap(0, size-1);
-        data[size-1] = -1; // null value of -1 is used to avoid Null Pointer exception
+        data[size-1] = -1; // null value of -1 is used to avoid Null Pointer exception because I set the last element
+                            // as null before (to signal that the root was removed from heap)
                             // assumes that -1 is never inputted into the heap
         size--;
         heapifyDown(0);
