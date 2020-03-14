@@ -72,7 +72,7 @@ public class MaxHeap implements Heap {
     }
 
     // remove the root item
-    public void heapifyDown(int index){ // work on this
+    public void heapifyDown(int index){
         int smalllestIndex = index;
 
         if(leftChildIndex(index) < size && data[leftChildIndex(index)] > data[index]){
