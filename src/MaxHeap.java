@@ -132,26 +132,4 @@ public class MaxHeap implements Heap {
         return (this.size == heap.size) && this.isValidHeap() && heap.isValidHeap() &&
                 Arrays.equals(bubbleSort(this.data), bubbleSort(heap.data));
     }
-
-
-    public static void main(String[] args) {
-        MaxHeap heap = new MaxHeap(5);
-        Integer[] array = {2,5,6,8,4};
-        heap.MaxHeapNLogN(array);
-        System.out.println(Arrays.toString(heap.data));
-        System.out.println(heap.pop());
-        System.out.println(Arrays.toString(heap.data));
-        System.out.println(heap.isValidHeap());
-//        System.out.println(Arrays.toString(heap.data));
-
-        MaxHeap heap2 = new MaxHeap(6);
-        heap2.MaxHeapN(array);
-        System.out.println(Arrays.toString(heap2.data));
-
-//        System.out.println(heap.equals(heap2));
-
-
-
-
-    }
 }
